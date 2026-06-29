@@ -19,7 +19,7 @@ public class RagSearchTool {
         this.contentRetriever = contentRetriever;
     }
 
-    @Tool("Retrieve biographies or study notes of individuals")
+    @Tool("Retrieve knowledge you don't know")
     public String search(String query) {
         // This logic is only executed when the LLM determines retrieval is necessary
         return contentRetriever.retrieve(new Query(query)).stream()

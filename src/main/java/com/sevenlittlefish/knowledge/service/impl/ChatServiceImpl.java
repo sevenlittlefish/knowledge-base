@@ -31,7 +31,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public String chat(String msg) {
-        EmbeddingStore<TextSegment> embeddingStore = embeddingStoreConfig.getStore(VectorCollectionConstants.STUDY_NOTE_COLLECTION);
+        EmbeddingStore<TextSegment> embeddingStore = embeddingStoreConfig.getStore(VectorCollectionConstants.DEFAULT_COLLECTION);
         ContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)

@@ -2,11 +2,10 @@ package com.sevenlittlefish.knowledge.persistence.repo;
 
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
-import io.qdrant.client.grpc.Points;
 
 import java.util.List;
 
-public interface StudyNotesRepo {
+public interface EmbeddingStoreRepo {
 
     void save(List<TextSegment> list);
 

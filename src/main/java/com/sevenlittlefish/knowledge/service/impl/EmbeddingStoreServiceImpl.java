@@ -1,9 +1,9 @@
 package com.sevenlittlefish.knowledge.service.impl;
 
-import com.sevenlittlefish.knowledge.persistence.repo.StudyNotesRepo;
+import com.sevenlittlefish.knowledge.persistence.repo.EmbeddingStoreRepo;
 import com.sevenlittlefish.knowledge.service.DocumentSplitterService;
 import com.sevenlittlefish.knowledge.service.FileLoaderService;
-import com.sevenlittlefish.knowledge.service.StudyNotesService;
+import com.sevenlittlefish.knowledge.service.EmbeddingStoreService;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.segment.TextSegment;
 import jakarta.annotation.Resource;
@@ -15,23 +15,23 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Service
-public class StudyNotesServiceImpl implements StudyNotesService {
+public class EmbeddingStoreServiceImpl implements EmbeddingStoreService {
 
     @Resource
     private FileLoaderService fileLoaderService;
     @Resource
     private DocumentSplitterService documentSplitterService;
     @Resource
-    private StudyNotesRepo studyNotesRepo;
+    private EmbeddingStoreRepo embeddingStoreRepo;
 
     @Override
-    public void loadNote(String filePath) {
+    public void loadFile(String filePath) {
         Path path = Paths.get(filePath);
         if (!Files.exists(path)) {
             throw new RuntimeException("file not found");
         }
         Document document = fileLoaderService.loadFile(filePath);
         List<TextSegment> textSegments = documentSplitterService.paragraphSplit(document);
-        studyNotesRepo.save(textSegments);
+        embeddingStoreRepo.save(textSegments);
     }
 }
