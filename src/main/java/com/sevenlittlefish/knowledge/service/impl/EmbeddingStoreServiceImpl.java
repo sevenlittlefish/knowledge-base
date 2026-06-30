@@ -1,5 +1,6 @@
 package com.sevenlittlefish.knowledge.service.impl;
 
+import com.sevenlittlefish.knowledge.domain.LoadFileDto;
 import com.sevenlittlefish.knowledge.persistence.repo.EmbeddingStoreRepo;
 import com.sevenlittlefish.knowledge.service.DocumentSplitterService;
 import com.sevenlittlefish.knowledge.service.FileLoaderService;
@@ -25,13 +26,22 @@ public class EmbeddingStoreServiceImpl implements EmbeddingStoreService {
     private EmbeddingStoreRepo embeddingStoreRepo;
 
     @Override
-    public void loadFile(String filePath) {
-        Path path = Paths.get(filePath);
+    public void loadFile(LoadFileDto dto) {
+        Path path = Paths.get(dto.getPath());
         if (!Files.exists(path)) {
-            throw new RuntimeException("file not found");
+            throw new RuntimeException("file or directory not found");
         }
-        Document document = fileLoaderService.loadFile(filePath);
-        List<TextSegment> textSegments = documentSplitterService.paragraphSplit(document);
+
+        List<TextSegment> textSegments;
+
+        if (dto.isDirectory()) {
+            List<Document> documents = fileLoaderService.loadDirectory(dto.getPath());
+            textSegments = documentSplitterService.paragraphSplit(documents);
+        } else {
+            Document document = fileLoaderService.loadFile(dto.getPath());
+            textSegments = documentSplitterService.paragraphSplit(document);
+        }
+
         embeddingStoreRepo.save(textSegments);
     }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface DocumentSplitterService {
 
     List<TextSegment> paragraphSplit(Document document);
+
+    List<TextSegment> paragraphSplit(List<Document> document);
 }

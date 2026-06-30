@@ -15,4 +15,9 @@ public class DocumentSplitterServiceImpl implements DocumentSplitterService {
     public List<TextSegment> paragraphSplit(Document document) {
         return DocumentSplitterSet.PARAGRAPH_SPLITTER.split(document);
     }
+
+    @Override
+    public List<TextSegment> paragraphSplit(List<Document> document) {
+        return DocumentSplitterSet.PARAGRAPH_SPLITTER.splitAll(document);
+    }
 }

@@ -78,6 +78,13 @@
 			<version>1.11.8-beta19</version>
 		</dependency>
 
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-document-parser-apache-tika</artifactId>
+			<version>1.11.8-beta19</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
