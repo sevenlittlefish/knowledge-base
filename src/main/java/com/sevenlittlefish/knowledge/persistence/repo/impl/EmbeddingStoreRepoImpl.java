@@ -1,7 +1,7 @@
 package com.sevenlittlefish.knowledge.persistence.repo.impl;
 
-import com.sevenlittlefish.knowledge.common.constant.VectorCollectionConstants;
 import com.sevenlittlefish.knowledge.config.EmbeddingStoreConfig;
+import com.sevenlittlefish.knowledge.common.constant.VectorCollectionConstants;
 import com.sevenlittlefish.knowledge.persistence.repo.EmbeddingStoreRepo;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
@@ -18,13 +18,11 @@ import java.util.List;
 public class EmbeddingStoreRepoImpl implements EmbeddingStoreRepo {
 
     @Resource
-    private EmbeddingStoreConfig embeddingStoreConfig;
-    @Resource
     private EmbeddingModel embeddingModel;
 
     @Override
     public void save(List<TextSegment> list) {
-        EmbeddingStore<TextSegment> embeddingStore = embeddingStoreConfig.getStore(VectorCollectionConstants.DEFAULT_COLLECTION);
+        EmbeddingStore<TextSegment> embeddingStore = EmbeddingStoreConfig.getStore(VectorCollectionConstants.DEFAULT_COLLECTION);
         for (TextSegment segment : list) {
             Embedding embedding = embeddingModel.embed(segment).content();
             embeddingStore.add(embedding, segment);
@@ -36,7 +34,7 @@ public class EmbeddingStoreRepoImpl implements EmbeddingStoreRepo {
         Embedding embedding = embeddingModel.embed(msg).content();
         EmbeddingSearchRequest request = EmbeddingSearchRequest.builder().queryEmbedding(embedding).build();
 
-        EmbeddingStore<TextSegment> embeddingStore = embeddingStoreConfig.getStore(VectorCollectionConstants.DEFAULT_COLLECTION);
+        EmbeddingStore<TextSegment> embeddingStore = EmbeddingStoreConfig.getStore(VectorCollectionConstants.DEFAULT_COLLECTION);
         return embeddingStore.search(request).matches();
     }
 }

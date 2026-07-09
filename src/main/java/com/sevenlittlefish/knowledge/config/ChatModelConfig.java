@@ -1,8 +1,11 @@
 package com.sevenlittlefish.knowledge.config;
 
+import com.sevenlittlefish.knowledge.common.constant.CommonConstants;
 import com.sevenlittlefish.knowledge.common.enums.ChatModelEnum;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
+import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +23,17 @@ public class ChatModelConfig {
                 .baseUrl("http://localhost:11434")
                 .modelName(ChatModelEnum.QWEN3.getCode())
                 .listeners(List.of(AiListenerConfig.chatModelListener()))
-                .timeout(Duration.ofSeconds(1800))
+                .timeout(Duration.ofMillis(CommonConstants.CHAT_MODEL_TIMEOUT))
+                .build();
+    }
+
+    @Bean
+    public StreamingChatModel streamingChatModel() {
+        return OllamaStreamingChatModel.builder()
+                .baseUrl("http://localhost:11434")
+                .modelName(ChatModelEnum.QWEN3.getCode())
+                .listeners(List.of(AiListenerConfig.chatModelListener()))
+                .timeout(Duration.ofMillis(CommonConstants.CHAT_MODEL_TIMEOUT))
                 .build();
     }
 }
