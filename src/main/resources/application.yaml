@@ -7,3 +7,17 @@ server:
   servlet:
     context-path: /knowledgeBase
 
+chat-model:
+  url: http://localhost:11434
+
+embedding-model:
+  url: http://localhost:11434
+
+embedding-store:
+  host: localhost
+  port: 6334
+
+scoring-model:
+  apiKey: jina_82083d364f2848169d386f5309d2c553twzHlY9hckOtAPpjmnZa39RsE3Qn
+  modelName: jina-reranker-v2-base-multilingual
+  baseUrl: https://api.jina.ai/v1/rerank

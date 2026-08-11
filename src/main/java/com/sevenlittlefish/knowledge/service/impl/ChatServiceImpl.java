@@ -25,7 +25,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public SseEmitter chatStream(String msg) {
-        SseEmitter emitter = new SseEmitter(CommonConstants.CHAT_MODEL_TIMEOUT);
+        SseEmitter emitter = new SseEmitter(CommonConstants.CHAT_MODEL_TIMEOUT_MILLIS);
         ReqContext.setCollection(VectorCollectionConstants.DEFAULT_COLLECTION);
         TokenStream tokenStream = assistant.chatStream(ReqContext.getMemory(), msg);
         tokenStream
